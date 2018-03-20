@@ -7,3 +7,4 @@ alias gcp-vpn='sudo openvpn --config otus_test_bastion.ovpn'
 ```
 bastion_IP = 35.205.136.3
 someinternalhost_IP = 10.132.0.3
+
