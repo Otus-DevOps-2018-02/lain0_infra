@@ -9,3 +9,6 @@ git tag -d tag_name
 
 # show commits by tag_name
 git show tag_name
+
+# push tags to remote repository
+git push origin --tags
