@@ -1,0 +1,20 @@
+ssh-add -L
+# посмореть вписанную ауторизацию
+
+ssh-add ~/.ssh/appuser
+# Добавить приватный ключ в ssh агент авторизации
+
+Host gcp-bastion
+ HostName 35.205.136.3
+ User otus-serj
+ IdentityFile ~/.ssh/gcp/otus-serj
+ ControlMaster auto
+ ControlPath ~/.ssh/ssh-%r@%h:%p
+# мультиплексоровать все сессии с бастионом в одну
+
+Host gcp-1
+ HostName 10.132.0.3
+ User otus-serj
+ IdentityFile ~/.ssh/gcp/otus-serj
+ ProxyCommand ssh -A gcp-bastion -W %h:%p 
+# использовать это соединение через прокси соединение с бастионом с ауторизацией добавленной 
