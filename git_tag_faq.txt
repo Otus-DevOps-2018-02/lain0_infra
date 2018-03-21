@@ -1,0 +1,13 @@
+# create tag
+git tag tag_name
+
+# create annotated tag
+git tag -a tag_name -m "tag annotation"
+
+# del tag_name
+git tag -d tag_name
+
+# show commits by tag_name
+git show tag_name
+# push tags to remote
+git push --tags
