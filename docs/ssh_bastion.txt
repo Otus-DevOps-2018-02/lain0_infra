@@ -4,6 +4,9 @@ ssh-add -L
 ssh-add ~/.ssh/appuser
 # Добавить приватный ключ в ssh агент авторизации
 
+ssh-keygen -t rsa -f ~/.ssh/gcp/appuser -C appuser -P ""
+# add appuser priv/pub keys in ~/.ssh/gcp/appuser as appuser/appuser.pub
+
 Host gcp-bastion
  HostName 35.205.136.3
  User otus-serj
@@ -16,5 +19,5 @@ Host gcp-1
  HostName 10.132.0.3
  User otus-serj
  IdentityFile ~/.ssh/gcp/otus-serj
- ProxyCommand ssh -A gcp-bastion -W %h:%p 
-# использовать это соединение через прокси соединение с бастионом с ауторизацией добавленной 
+ ProxyCommand ssh -A gcp-bastion -W %h:%p
+# использовать это соединение через прокси соединение с бастионом с ауторизацией добавленной

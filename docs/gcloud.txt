@@ -1,0 +1,20 @@
+# https://cloud.google.com/sdk/docs/
+
+gcloud info
+# проверить устрановку
+
+gcloud auth list
+# список credentialed accounts
+
+gcloud auth login `ACCOUNT`
+# добавление account credentials
+
+gcloud config set project infra-198609
+# set gcloud project_id
+
+gcloud compute instances list
+# посмотреть какие есть инстансы
+
+gcloud compute instances create
+# создать инстанс в названии инстанса нельзя использовать _
+# в стартап скриптах нельзя использовать не ascii символы, без русских букв в коментариях
