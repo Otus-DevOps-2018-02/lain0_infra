@@ -18,3 +18,6 @@ gcloud compute instances list
 gcloud compute instances create
 # создать инстанс в названии инстанса нельзя использовать _
 # в стартап скриптах нельзя использовать не ascii символы, без русских букв в коментариях
+
+gcloud projects list
+# посмотреть project_id
