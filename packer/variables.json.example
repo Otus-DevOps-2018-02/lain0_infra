@@ -1,6 +1,5 @@
 {
-  "project_id": "infra-xxx",
-  "source_image_family": "ubuntu-1604-lts",
-  "machine_type": "f1-micro"
+  "gcp_project_id": "infra-xxxx",
+  "gcp_source_image_family": "ubuntu-1604-lts",
+  "gcp_machine_type": "f1-micro"
 }
-
