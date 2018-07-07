@@ -5,6 +5,8 @@ gcloud auth application-default login
 
 packer validate ./ubuntu16.json
 # проверка синтаксиса и на ошибки в  конфигурации
+packer validate -var-file ./variables.json ./ubuntu16.json
+# проверка синтаксиса конфигурации с файлом переменных
 
 packer build ubuntu16.json
 # запуск build образа
