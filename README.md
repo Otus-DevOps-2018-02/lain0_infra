@@ -28,7 +28,7 @@ gcloud compute firewall-rules create puma-server \
 
 # hw06 Packer
 [0]: https://www.packer.io/downloads.html
-1) Download Packer[0] make alias in .bashrc_aliases
+1) Download [Packer][0] make alias in .bashrc_aliases
 alias packer='~/packer'
 2)set project_id
 ```
