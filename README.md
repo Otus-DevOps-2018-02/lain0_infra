@@ -52,5 +52,5 @@ gcloud compute instances create reddit-app-packer \
   --tags=puma-server \
   --zone=europe-west1-b \
   --restart-on-failure \
-  --metadata-from-file startup-script=../config-scripts/deploy.sh
+  --metadata-from-file startup-script=config-scripts/deploy.sh
 ```

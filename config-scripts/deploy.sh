@@ -10,5 +10,3 @@ cd reddit && bundle install
 #start puma as deamon
 puma -d
 
-# know puma's port
-# ps aux | grep puma
