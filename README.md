@@ -30,7 +30,7 @@ gcloud compute firewall-rules create puma-server \
 [0]: https://www.packer.io/downloads.html
 1) Download [Packer][0] make alias in .bashrc_aliases
 alias packer='~/packer'
-2)set project_id
+2) set project_id
 ```
 gcloud config set project infra-198609
 ```
