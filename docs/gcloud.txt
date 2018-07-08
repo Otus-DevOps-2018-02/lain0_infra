@@ -12,12 +12,16 @@ gcloud auth login `ACCOUNT`
 gcloud config set project infra-198609
 # set gcloud project_id
 
-gcloud compute instances list
 # посмотреть какие есть инстансы
+gcloud compute instances list
 
-gcloud compute instances create
 # создать инстанс в названии инстанса нельзя использовать _
 # в стартап скриптах нельзя использовать не ascii символы, без русских букв в коментариях
+gcloud compute instances create
 
-gcloud projects list
 # посмотреть project_id
+gcloud projects list
+
+# посмотреть доступные образы с reddit
+gcloud compute images list --filter reddit
+

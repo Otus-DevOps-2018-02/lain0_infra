@@ -3,13 +3,15 @@ https://www.packerbook.com/ThePackerBook_sample.pdf
 # разрешить adc раотать с Credentials gcp
 gcloud auth application-default login
 
-packer validate ./ubuntu16.json
 # проверка синтаксиса и на ошибки в  конфигурации
-packer validate -var-file ./variables.json ./ubuntu16.json
+packer validate ./ubuntu16.json
 # проверка синтаксиса конфигурации с файлом переменных
+packer validate -var-file ./variables.json ./ubuntu16.json
 
+
+# build image
 packer build ubuntu16.json
-# запуск build образа
+
 
 # Проверка основных секций шаблона
 packer inspect ubuntu16.json

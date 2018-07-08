@@ -11,4 +11,4 @@ cd reddit && bundle install
 puma -d
 
 # know puma's port
-ps aux | grep puma
+# ps aux | grep puma
