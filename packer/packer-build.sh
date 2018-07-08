@@ -3,6 +3,6 @@
 
 echo "build for build or validate for validate"
 
-./packer $1 \
+packer $1 \
   -var-file=variables.json \
   ubuntu16.json
