@@ -96,4 +96,10 @@ terraform taint google_compute_instance.app
 terraform plan
 terraform apply --auto-approve=true
 ```
-14) Input vars
+14) make Input vars vs terraform.tfvars
+15) terraform destroy --auto-approve=true && terraform plan && terraform apply --auto-approve=true && terraform output
+16) terraform linter:
+```
+terraform fmt
+```
+17) ?* keys added via web interface after "terraform apply" are deleted

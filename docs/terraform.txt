@@ -33,3 +33,9 @@ terraform output project
 # terraform taint
 # recreate instance on  terraform apply
 terraform taint google_compute_instance.app
+
+# destroy
+terraform destroy
+
+#terraform linter formater
+terraform fmt
