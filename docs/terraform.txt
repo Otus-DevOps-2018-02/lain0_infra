@@ -30,4 +30,6 @@ terraform output app_external_ip
 terraform output project
 
 # mark resouce terraform to create on next terraform apply
-terraform taint
+# terraform taint
+# recreate instance on  terraform apply
+terraform taint google_compute_instance.app
