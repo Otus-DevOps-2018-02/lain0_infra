@@ -38,11 +38,9 @@ resource "google_compute_instance" "app" {
     source      = "files/puma.service"
     destination = "/tmp/puma.service"
   }
-
   provisioner "remote-exec" {
     script = "files/deploy.sh"
   }
-
   # add user/sshkey for provisioner
   connection {
     type        = "ssh"
