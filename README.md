@@ -28,7 +28,7 @@ gcloud compute firewall-rules create puma-server \
 
 # hw06 Packer
 [0]: https://www.packer.io/downloads.html
-1) Download [Packer][0] make alias in .bashrc_aliases
+1) Install [Packer][0] make alias in .bashrc_aliases
 alias packer='~/packer'
 2) set project_id
 ```
@@ -54,3 +54,46 @@ gcloud compute instances create reddit-app-packer \
   --restart-on-failure \
   --metadata-from-file startup-script=config-scripts/deploy.sh
 ```
+
+# hw07 Infrastructure as Code, Terraform.key
+[1]: https://www.terraform.io/downloads.html
+[2]: https://console.cloud.google.com/compute/metadata/sshKeys?project=infra-198609&authuser=1
+[3]: https://www.terraform.io/docs/providers/google/index.html
+[4]: https://www.terraform.io/docs/providers/google/r/compute_instance.html
+[5]: https://www.terraform.io/docs/provisioners/index.html
+[6]: https://raw.githubusercontent.com/express42/otus-snippets/master/hw-08/puma.service
+[7]: https://raw.githubusercontent.com/express42/otus-snippets/master/hw-08/part_of_main.tf
+1) check if image['reddit-base'].exists?
+```
+gcloud compute images list --filter reddit
+```
+2) Del appuser ssh-key from web interface: [Compute Engine->metadata->SSHkeys][2]
+3) Install [Terraform][1]
+4) Create main configuration terraform file: terraform/main.tf
+5) Terraform init && apply
+```
+terraform init
+terraform apply --auto-approve=true
+```
+6) Add terraform sshkey
+7) Filter Terraform output values
+```
+terraform refresh
+terraform output
+```
+8) Open port for our application - puma server tcp/9292
+```
+terraform plan
+terraform apply
+```
+9) Add tag to VM
+10) Provisioners. Add provisioner section in main.tf,
+11) get [puma.service][6]
+12) set connection propperties via section connection and sshkey
+13) test Provisioners
+```
+terraform taint google_compute_instance.app
+terraform plan
+terraform apply --auto-approve=true
+```
+14) Input vars

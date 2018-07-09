@@ -1,0 +1,33 @@
+# https://www.terraform.io/docs/providers/google/index.html
+# https://www.terraform.io/docs/providers/google/r/compute_instance.html
+
+# before using terraform we need to del sshkeys from web
+# Terraform loads *.tf from current_directory
+# initialize terraform
+terraform init
+
+# see all changes
+terraform plan
+
+# run VM instance and apply
+terraform apply
+
+# turn off extra approve for applying
+terraform apply --auto-approve=true
+
+# show terraform state file
+terraform show
+terraform show | grep assigned_nat_ip
+
+# Update local state file against real resources, for using new *.tf
+terraform refresh
+
+# Read an output from a state file using output section in *.tf
+terraform output
+
+# output only curent value
+terraform output app_external_ip
+terraform output project
+
+# mark resouce terraform to create on next terraform apply
+terraform taint
