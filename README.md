@@ -137,4 +137,9 @@ terraform plan && terraform apply
 Terraform supports explicit [Dependency][10] `depends_on`
 7) Resources structuring
 Separate main.tf into two configs
-) Load [Terraform modules][12]
+via packer make 2 new images in GCP
+```
+packer build -var-file=variables.json app.json
+packer build -var-file=variables.json db.json
+```
+8) Load [Terraform modules][12]
