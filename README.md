@@ -109,6 +109,8 @@ terraform fmt
 [8]: https://console.cloud.google.com/networking/networks/list?project=infra-198609&authuser=1
 [9]: https://www.terraform.io/intro/getting-started/dependencies.html
 [10]: https://www.terraform.io/docs/configuration/resources.html
+[11]: https://github.com/express42/otus-snippets
+[12]: https://www.terraform.io/docs/modules/sources.html
 1) Recreate infrastructure by:
 ```
 terraform apply
@@ -135,3 +137,4 @@ terraform plan && terraform apply
 Terraform supports explicit [Dependency][10] `depends_on`
 7) Resources structuring
 Separate main.tf into two configs
+) Load [Terraform modules][12]

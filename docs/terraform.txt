@@ -43,3 +43,6 @@ terraform fmt
 # import
 terraform import google_compute_firewall.firewall_ssh default-
 allow-ssh
+
+# load terraform modules
+terraform get
