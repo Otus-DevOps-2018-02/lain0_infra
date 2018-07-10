@@ -105,6 +105,7 @@ terraform fmt
 17) ?* keys added via web interface after "terraform apply" are deleted
 
 # hw08 Terraform2
+[8]: https://console.cloud.google.com/networking/networks/list?project=infra-198609&authuser=1
 1) Recreate infrastructure by:
 ```
 terraform apply
@@ -115,4 +116,11 @@ import GCP firewall ssh default policy:
 ```
 terraform import google_compute_firewall.firewall_ssh default-allow-ssh
 terraform apply --auto-approve=true && terraform output
+```
+4) Resources
+from webinterface delete [Bastion Statis IP][8]
+5) del all resources and recreate
+```
+terraform destroy
+terraform apply --auto-approve=true
 ```
