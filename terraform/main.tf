@@ -10,20 +10,21 @@ resource "google_compute_instance" "app" {
   zone         = "${var.zone}"
   tags         = ["reddit-app"]
 
-  # определение загрузочного диска
   boot_disk {
     initialize_params {
       image = "${var.disk_image}"
     }
   }
 
-  # определение сетевого интерфейса
+  # set network iface
   network_interface {
-    # сеть, к которой присоединить данный интерфейс
     network = "default"
 
-    # использовать ephemeral IP для доступа из Интернет
-    access_config {}
+    # ephemeral IP usage for inet
+    # using another resource attribute
+    access_config {
+      nat_ip = "${google_compute_address.app_ip.address}"
+    }
   }
 
   metadata {

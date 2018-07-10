@@ -25,11 +25,12 @@ gcloud compute firewall-rules create puma-server \
   --priority 1000 \
   --target-tags puma-server
 ```
+Deploy [monolith](https://github.com/express42/reddit.git) to GCP via `git clone`
 
 # hw06 Packer
 [0]: https://www.packer.io/downloads.html
 1) Install [Packer][0] make alias in .bashrc_aliases
-alias packer='~/packer'
+`alias packer='~/packer'`
 2) set project_id
 ```
 gcloud config set project infra-198609
@@ -102,10 +103,12 @@ terraform apply --auto-approve=true
 ```
 terraform fmt
 ```
-17) ?* keys added via web interface after "terraform apply" are deleted
+17) ?* keys added via web interface after `terraform apply` are deleted
 
 # hw08 Terraform2
 [8]: https://console.cloud.google.com/networking/networks/list?project=infra-198609&authuser=1
+[9]: https://www.terraform.io/intro/getting-started/dependencies.html
+[10]: https://www.terraform.io/docs/configuration/resources.html
 1) Recreate infrastructure by:
 ```
 terraform apply
@@ -115,12 +118,20 @@ terraform apply
 import GCP firewall ssh default policy:
 ```
 terraform import google_compute_firewall.firewall_ssh default-allow-ssh
-terraform apply --auto-approve=true && terraform output
+terraform apply --auto-approve=true
 ```
 4) Resources
 from webinterface delete [Bastion Statis IP][8]
 5) del all resources and recreate
 ```
-terraform destroy
-terraform apply --auto-approve=true
+terraform destroy && terraform apply --auto-approve=true
 ```
+6) Another resourse attribute and implicit [Resource Dependencies][9]
+Dependencies affect priority order for applying/creation of instances
+```
+terraform destroy
+terraform plan && terraform apply
+```
+Terraform supports explicit [Dependency][10] `depends_on`
+7) Resources structuring
+Separate main.tf into two configs
