@@ -37,5 +37,9 @@ terraform taint google_compute_instance.app
 # destroy
 terraform destroy
 
-#terraform linter formater
+# terraform linter formater
 terraform fmt
+
+# import
+terraform import google_compute_firewall.firewall_ssh default-
+allow-ssh

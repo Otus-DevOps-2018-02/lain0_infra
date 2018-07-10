@@ -103,3 +103,16 @@ terraform apply --auto-approve=true
 terraform fmt
 ```
 17) ?* keys added via web interface after "terraform apply" are deleted
+
+# hw08 Terraform2
+1) Recreate infrastructure by:
+```
+terraform apply
+```
+2) add default iptables -A ssh rule ACCEPT vs main.tf
+3) import existing infrastructure in terraform
+import GCP firewall ssh default policy:
+```
+terraform import google_compute_firewall.firewall_ssh default-allow-ssh
+terraform apply --auto-approve=true && terraform output
+```
