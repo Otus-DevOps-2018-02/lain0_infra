@@ -110,7 +110,8 @@ terraform fmt
 [9]: https://www.terraform.io/intro/getting-started/dependencies.html
 [10]: https://www.terraform.io/docs/configuration/resources.html
 [11]: https://github.com/express42/otus-snippets
-[12]: https://www.terraform.io/docs/modules/sources.html
+[12]: https://www.terraform.io/docs/providers/template/index.html
+[13]: https://www.terraform.io/docs/modules/sources.html
 1) Recreate infrastructure by:
 ```
 terraform apply
@@ -142,4 +143,9 @@ via packer make 2 new images in GCP
 packer build -var-file=variables.json app.json
 packer build -var-file=variables.json db.json
 ```
-8) Load [Terraform modules][12]
+we need mongo to bind IP to be not 127.0.0.1
+provision new mongodb.conf and puma.service vs ENV database URL
+get [terraform template provider][12] plugin vs `terraform init`
+add template var in puma.service.tpl and in app.tf  and recreate instance
+'terraform taint google_compute_instance.app'
+8) Modules [Terraform modules][13]

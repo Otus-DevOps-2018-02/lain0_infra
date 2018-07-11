@@ -18,6 +18,27 @@ resource "google_compute_instance" "db" {
   metadata {
     ssh-keys = "appuser:${file(var.public_key_path)}"
   }
+
+  # add user/sshkey for provisioner
+  connection {
+    type        = "ssh"
+    user        = "appuser"
+    agent       = false
+    private_key = "${file(var.privite_key_path)}"
+  }
+
+  provisioner "file" {
+    source      = "files/mongod.conf"
+    destination = "/tmp/mongod.conf"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo cp /tmp/mongod.conf /etc/mongod.conf && sudo systemctl restart mongod",
+    ]
+
+    # script = "files/mongo-bind.sh"
+  }
 }
 
 # access to DB for instance tagged reddit-app

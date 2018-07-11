@@ -1,3 +1,11 @@
+data "template_file" "reddit_app_puma_service" {
+  template = "${file("files/puma.service.tpl")}"
+
+  vars {
+    reddit_db_addr = "${google_compute_instance.db.network_interface.0.network_ip}"
+  }
+}
+
 resource "google_compute_instance" "app" {
   name         = "reddit-app"
   machine_type = "g1-small"
@@ -13,20 +21,13 @@ resource "google_compute_instance" "app" {
   network_interface {
     network = "default"
 
-    access_config = {}
+    access_config = {
+      nat_ip = "${google_compute_address.app_ip.address}"
+    }
   }
 
   metadata {
     ssh-keys = "appuser:${file(var.public_key_path)}"
-  }
-
-  provisioner "file" {
-    source      = "files/puma.service"
-    destination = "/tmp/puma.service"
-  }
-
-  provisioner "remote-exec" {
-    script = "files/deploy.sh"
   }
 
   # add user/sshkey for provisioner
@@ -35,6 +36,16 @@ resource "google_compute_instance" "app" {
     user        = "appuser"
     agent       = false
     private_key = "${file(var.privite_key_path)}"
+  }
+
+  provisioner "file" {
+    # source      = "files/puma.service"
+    content     = "${data.template_file.reddit_app_puma_service.rendered}"
+    destination = "/tmp/puma.service"
+  }
+
+  provisioner "remote-exec" {
+    script = "files/deploy.sh"
   }
 }
 

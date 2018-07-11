@@ -3,7 +3,7 @@
 
 # before using terraform we need to del sshkeys from web
 # Terraform loads *.tf from current_directory
-# initialize terraform
+# initialize terraform, and install all nessesery modules like template
 terraform init
 
 # see all changes
@@ -46,3 +46,5 @@ allow-ssh
 
 # load terraform modules
 terraform get
+
+#
