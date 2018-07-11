@@ -28,7 +28,7 @@ resource "google_compute_instance" "db" {
   }
 
   provisioner "file" {
-    source      = "files/mongod.conf"
+    source      = "${path.module}/files/mongod.conf"
     destination = "/tmp/mongod.conf"
   }
 
@@ -37,7 +37,7 @@ resource "google_compute_instance" "db" {
       "sudo cp /tmp/mongod.conf /etc/mongod.conf && sudo systemctl restart mongod",
     ]
 
-    # script = "files/mongo-bind.sh"
+    # script = "${path.module}/files/mongo-bind.sh"
   }
 }
 

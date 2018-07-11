@@ -149,3 +149,5 @@ get [terraform template provider][12] plugin vs `terraform init`
 add template var in puma.service.tpl and in app.tf  and recreate instance
 'terraform taint google_compute_instance.app'
 8) Modules [Terraform modules][13]
+cp .tf cfgs into modules folders files and `terraform init && terraform get`
+

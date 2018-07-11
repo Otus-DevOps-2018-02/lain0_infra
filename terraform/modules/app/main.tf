@@ -1,8 +1,8 @@
 data "template_file" "reddit_app_puma_service" {
-  template = "${file("files/puma.service.tpl")}"
+  template = "${file("${path.module}/files/puma.service.tpl")}"
 
   vars {
-    reddit_db_addr = "${google_compute_instance.db.network_interface.0.network_ip}"
+    reddit_db_addr = "${var.reddit_db_ip}"
   }
 }
 
@@ -45,7 +45,7 @@ resource "google_compute_instance" "app" {
   }
 
   provisioner "remote-exec" {
-    script = "files/deploy.sh"
+    script = "${path.module}/files/deploy.sh"
   }
 }
 
