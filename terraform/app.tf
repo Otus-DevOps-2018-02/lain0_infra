@@ -13,13 +13,28 @@ resource "google_compute_instance" "app" {
   network_interface {
     network = "default"
 
-    access_config = {
-      nat_ip = "${google_compute_address.app_ip.address}"
-    }
+    access_config = {}
   }
 
   metadata {
     ssh-keys = "appuser:${file(var.public_key_path)}"
+  }
+
+  provisioner "file" {
+    source      = "files/puma.service"
+    destination = "/tmp/puma.service"
+  }
+
+  provisioner "remote-exec" {
+    script = "files/deploy.sh"
+  }
+
+  # add user/sshkey for provisioner
+  connection {
+    type        = "ssh"
+    user        = "appuser"
+    agent       = false
+    private_key = "${file(var.privite_key_path)}"
   }
 }
 
