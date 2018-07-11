@@ -22,3 +22,8 @@ module "db" {
   project          = "${var.project}"
   db_disk_image    = "${var.db_disk_image}"
 }
+
+module "vpc" {
+  source        = "modules/vpc"
+  source_ranges = ["80.250.215.124/32", "109.172.15.33/32"]
+}

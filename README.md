@@ -79,13 +79,11 @@ terraform apply --auto-approve=true
 6) Add terraform sshkey
 7) Filter Terraform output values
 ```
-terraform refresh
-terraform output
+terraform refresh && terraform output
 ```
 8) Open port for our application - puma server tcp/9292
 ```
-terraform plan
-terraform apply
+terraform plan && terraform apply
 ```
 9) Add tag to VM
 10) Provisioners. Add provisioner section in main.tf,
@@ -135,7 +133,7 @@ Dependencies affect priority order for applying/creation of instances
 terraform destroy
 terraform plan && terraform apply
 ```
-Terraform supports explicit [Dependency][10] `depends_on`
+Terraform supports explicit [Dependency][10] `depends_on` .
 7) Resources structuring
 Separate main.tf into two configs
 via packer make 2 new images in GCP
@@ -147,7 +145,8 @@ we need mongo to bind IP to be not 127.0.0.1
 provision new mongodb.conf and puma.service vs ENV database URL
 get [terraform template provider][12] plugin vs `terraform init`
 add template var in puma.service.tpl and in app.tf  and recreate instance
-'terraform taint google_compute_instance.app'
+'terraform taint google_compute_instance.app' .
 8) Modules [Terraform modules][13]
-cp .tf cfgs into modules folders files and `terraform init && terraform get`
+cp .tf cfgs into modules folders files and `terraform init && terraform get` .
+
 
