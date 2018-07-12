@@ -112,6 +112,8 @@ terraform fmt
 [13]: https://www.terraform.io/docs/modules/sources.html
 [14]: https://cloud.google.com/vpc/docs/using-firewalls
 [15]: https://registry.terraform.io/
+[16]: https://registry.terraform.io/modules/SweetOps/storage-bucket/google
+[17]: https://registry.terraform.io/browse?provider=google
 1) Recreate infrastructure by:
 ```
 terraform apply
@@ -168,3 +170,8 @@ gcloud compute firewall-rules list --filter network=default \
 9) Reuse modules
 prod and stage can use modules app and db like DRY way
 10) Terraform [Module Registry][15]
+install module [Terraform ][16] `terraform init`
+list backets in GCP
+```
+gsutil ls
+```

@@ -12,6 +12,23 @@ variable region {
   default     = "europe-west1"
 }
 
+variable machine_type {
+  description = "Machine type"
+  default     = "g1-small"
+}
+
+variable target_tags {
+  # target_tags
+  description = "target_tags"
+  default     = ["reddit-app"]
+}
+
+variable tags {
+  # target_tags
+  description = "target_tags"
+  default     = ["reddit-app"]
+}
+
 variable public_key_path {
   description = "Path to the public key used for ssh access"
 }

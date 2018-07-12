@@ -8,9 +8,9 @@ data "template_file" "reddit_app_puma_service" {
 
 resource "google_compute_instance" "app" {
   name         = "reddit-app"
-  machine_type = "g1-small"
+  machine_type = "${var.machine_type}"
   zone         = "${var.zone}"
-  tags         = ["reddit-app"]
+  tags         = "${var.tags}"
 
   boot_disk {
     initialize_params {
@@ -63,5 +63,5 @@ resource "google_compute_firewall" "firewall_puma" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["reddit-app"]
+  target_tags   = "${var.target_tags}"
 }
