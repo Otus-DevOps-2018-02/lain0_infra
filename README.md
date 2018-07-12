@@ -110,6 +110,7 @@ terraform fmt
 [11]: https://github.com/express42/otus-snippets
 [12]: https://www.terraform.io/docs/providers/template/index.html
 [13]: https://www.terraform.io/docs/modules/sources.html
+[14]: https://cloud.google.com/vpc/docs/using-firewalls
 1) Recreate infrastructure by:
 ```
 terraform apply
@@ -148,5 +149,18 @@ add template var in puma.service.tpl and in app.tf  and recreate instance
 'terraform taint google_compute_instance.app' .
 8) Modules [Terraform modules][13]
 cp .tf cfgs into modules folders files and `terraform init && terraform get` .
-
-
+create module "vpc" , now we cat set source_ip from main.tf see and cachanges by [gcp firewall-rules list][13]:
+```
+gcloud compute firewall-rules list --filter network=default \
+    --sort-by priority \
+    --format="table(
+        name,
+        priority,
+        sourceRanges.list():label=[SRC_RANGES],
+        destinationRanges.list():label=[DEST_RANGES],
+        allowed[].map().firewall_rule().list():label=ALLOW,
+        denied[].map().firewall_rule().list():label=DENY,
+        sourceTags.list():label=[SRC_TAGS],
+        targetTags.list():label=[TARGET_TAGS]
+        )"
+```
