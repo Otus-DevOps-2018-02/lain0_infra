@@ -111,6 +111,7 @@ terraform fmt
 [12]: https://www.terraform.io/docs/providers/template/index.html
 [13]: https://www.terraform.io/docs/modules/sources.html
 [14]: https://cloud.google.com/vpc/docs/using-firewalls
+[15]: https://registry.terraform.io/
 1) Recreate infrastructure by:
 ```
 terraform apply
@@ -149,7 +150,7 @@ add template var in puma.service.tpl and in app.tf  and recreate instance
 `terraform taint google_compute_instance.app` .
 8) Modules [Terraform modules][13]
 cp .tf cfgs into modules folders files and `terraform init && terraform get` .
-create module "vpc" , now we cat set source_ip from main.tf see and cachanges by [gcp firewall-rules list][13]:
+create module "vpc" , now we cat set source_ip from main.tf see and cachanges by [gcp firewall-rules list][14]:
 ```
 gcloud compute firewall-rules list --filter network=default \
     --sort-by priority \
@@ -164,4 +165,6 @@ gcloud compute firewall-rules list --filter network=default \
         targetTags.list():label=[TARGET_TAGS]
         )"
 ```
-9) Reuse modules DRY for
+9) Reuse modules
+prod and stage can use modules app and db like DRY way
+10) Terraform [Module Registry][15]
