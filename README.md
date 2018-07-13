@@ -194,6 +194,9 @@ Terraform locks tf state in Remote backends, while applying, so another tf job f
 [26]: https://docs.ansible.com/ansible/latest/modules/service_module.html
 [27]: https://docs.ansible.com/ansible/latest/modules/git_module.html
 [28]: https://raw.githubusercontent.com/express42/otus-snippets/master/hw-10/clone.yml
+[29]: https://docs.ansible.com/ansible/latest/dev_guide/developing_inventory.html
+[30]: https://medium.com/@Nklya/%D0%B4%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5-%D0%B8%D0%BD%D0%B2%D0%B5%D0%BD%D1%82%D0%BE%D1%80%D0%B8-%D0%B2-ansible-9ee880d540d6
+[31]: https://docs.ansible.com/ansible/latest/scenario_guides/guide_gce.html
 1) Install ansible
 ```
 pip install -r requirements.txt
@@ -234,3 +237,8 @@ ansible app -m git -a 'repo=https://github.com/express42/reddit.git dest=/home/a
 
 ```
 13) Playbook `ansible-playbook clone.yml`
+before `rm -rf` ansible changed=0 becouse directory already existed
+after module git cloned it on server and changed=1
+#### Task vs *
+14) [Dynamic inventory][29] vs json config
+`ansible all -i inventory.json -m ping`
