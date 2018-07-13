@@ -1,2 +1,5 @@
-git mv 
-# перенос файлов в гит репозитории
+# git diff vs branch
+git diff terraform-2
+
+# move files in git
+git mv 1 2
