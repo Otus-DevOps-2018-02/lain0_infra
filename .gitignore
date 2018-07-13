@@ -9,4 +9,6 @@ packer/packer
 *.tfvars
 .terraform/
 *.tf--
-##
+## Ansible
+ansible/ansible2.4
+ansible/=2.4

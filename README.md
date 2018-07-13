@@ -182,3 +182,55 @@ use it's stages from cloud
 
 ##### Task *
 Terraform locks tf state in Remote backends, while applying, so another tf job fails vs Error 412: Precondition Failed
+
+# hw09 Ansible
+[19]: https://habrahabr.ru/company/ruvds/blog/340306/
+[20]: https://raw.githubusercontent.com/express42/otus-snippets/master/hw-10/ansible.cfg
+[21]: http://docs.ansible.com/ansible/latest/intro_inventory.html
+[22]: https://gist.github.com/Nklya/95a875d054d7956a54ddcd88b23f58a5
+[23]: https://docs.ansible.com/ansible/latest/modules/command_module.html
+[24]: https://docs.ansible.com/ansible/latest/modules/shell_module.html
+[25]: https://docs.ansible.com/ansible/latest/modules/systemd_module.html
+[26]: https://docs.ansible.com/ansible/latest/modules/service_module.html
+[27]: https://docs.ansible.com/ansible/latest/modules/git_module.html
+[28]: https://raw.githubusercontent.com/express42/otus-snippets/master/hw-10/clone.yml
+1) Install ansible
+```
+pip install -r requirements.txt
+pip install ansible>=2.4
+easy_install `cat requirements.txt`
+```
+2) Create [inventory][19] file
+3) Ansible can ping host
+```
+ansible appserver -i ./inventory -m ping
+ansible dbserver -i ./inventory -m ping
+```
+4) Add [ansible.cfg][20]
+now ansible can ping inventory hosts just like:
+```
+ansible appserver  -m ping
+ansible dbserver -m ping
+```
+5) Commend module usage: `ansible dbserver -m command -a uptime` .
+6) Inventory hosts group
+```
+ansible db -m ping
+ansible all -m ping
+```
+7) [YAML Inventory][21]
+ansible db -i ./inventory.yml -m ping
+8) [comand module][23]
+```
+ansible db -m command -a 'systemctl status mongod'
+```
+9) [shell module][24] `ansible db -m shell -a 'systemctl status mongod'`
+10) [systemd module][25] `ansible db -m systemd -a name=mongod`
+11) [service module][26] `ansible db -m service -a name=mongod`
+this module supports init.d
+12) [git module][27]
+```
+ansible app -m git -a 'repo=https://github.com/express42/reddit.git dest=/home/appuser/reddit'
+
+```
+13) Playbook `ansible-playbook clone.yml`
