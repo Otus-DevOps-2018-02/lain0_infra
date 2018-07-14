@@ -138,7 +138,10 @@ Dependencies affect priority order for applying/creation of instances
 terraform destroy
 terraform plan && terraform apply
 ```
-Terraform supports explicit [Dependency][10] `depends_on` .
+Terraform supports explicit [Dependency][10]
+```
+depends_on
+```
 7) Resources structuring
 Separate main.tf into two configs
 via packer make 2 new images in GCP
@@ -150,7 +153,9 @@ we need mongo to bind IP to be not 127.0.0.1
 provision new mongodb.conf and puma.service vs ENV database URL
 get [terraform template provider][12] plugin vs `terraform init`
 add template var in puma.service.tpl and in app.tf  and recreate instance
-`terraform taint google_compute_instance.app` .
+```
+terraform taint google_compute_instance.app
+```
 8) Modules [Terraform modules][13]
 cp .tf cfgs into modules folders files and `terraform init && terraform get` .
 create module "vpc" , now we cat set source_ip from main.tf see and cachanges by [gcp firewall-rules list][14]:
