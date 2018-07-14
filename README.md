@@ -242,3 +242,21 @@ after module git cloned it on server and changed=1
 #### Task vs *
 14) [Dynamic inventory][29] vs json config
 `ansible all -i inventory.json -m ping`
+
+# hw10 Ansible Playbooks Templays
+[32]: https://gist.githubusercontent.com/Artemmkin/7609a03210e66af90d12bc59a54f6e3f/raw/690bebc6ab17b3a50b82667873c03c0722e8773b/puma.service
+1) One playbook one play
+disable provisioning in teraform app/db modules
+`terrafotm destroy && terraform apply`
+`andible-playlook --check reddit_app.yml`
+define variables
+`ansible-playbook reddit_app.yml --check --limit db`
+# Handlers
+handlers run only after another tasks notification
+```
+ansible-playbook reddit_app.yml --check --limit d
+ansible-playbook reddit_app.yml --limit db
+```
+
+) one playbook many scenarios
+) multy playbooks

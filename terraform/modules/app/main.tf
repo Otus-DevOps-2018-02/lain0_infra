@@ -38,15 +38,15 @@ resource "google_compute_instance" "app" {
     private_key = "${file(var.privite_key_path)}"
   }
 
-  provisioner "file" {
-    # source      = "files/puma.service"
-    content     = "${data.template_file.reddit_app_puma_service.rendered}"
-    destination = "/tmp/puma.service"
-  }
+  # provisioner "file" {
+  #   # source      = "files/puma.service"
+  #   content     = "${data.template_file.reddit_app_puma_service.rendered}"
+  #   destination = "/tmp/puma.service"
+  # }
 
-  provisioner "remote-exec" {
-    script = "${path.module}/files/deploy.sh"
-  }
+  # provisioner "remote-exec" {
+  #   script = "${path.module}/files/deploy.sh"
+  # }
 }
 
 resource "google_compute_address" "app_ip" {
