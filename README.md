@@ -248,7 +248,7 @@ after module git cloned it on server and changed=1
 14) [Dynamic inventory][29] vs json config
 `ansible all -i inventory.json -m ping`
 
-# hw10 Ansible Playbooks Templays
+# hw10 Ansible Playbooks Templates
 [32]: https://gist.githubusercontent.com/Artemmkin/7609a03210e66af90d12bc59a54f6e3f/raw/690bebc6ab17b3a50b82667873c03c0722e8773b/puma.service
 [33]: https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#task-and-handler-organization-for-a-role
 [34]: https://gist.githubusercontent.com/Artemmkin/b0d74e5e439cb2865597567c3e17170c/raw/588aa069cf39e887595f97de7fd0be86b6b6417d/mongo_play2.yaml
