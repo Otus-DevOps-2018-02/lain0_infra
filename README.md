@@ -284,3 +284,7 @@ ansible-playbook reddit_app2.yml --tags deploy-tag --check
 ansible-playbook reddit_app2.yml --tags deploy-tag
 ```
 3) multi Playbooks
+```
+ansible-playbook site.yml --check
+ansible-playbook site.yml
+```
