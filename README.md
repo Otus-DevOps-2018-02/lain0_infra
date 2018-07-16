@@ -255,6 +255,11 @@ after module git cloned it on server and changed=1
 [35]: https://docs.ansible.com/ansible/latest/user_guide/intro_dynamic_inventory.html
 [36]: https://docs.ansible.com/ansible/latest/modules/list_of_all_modules.html
 [37]: https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html
+[38]: https://docs.ansible.com/ansible/latest/modules/apt_module.html#apt-module
+[39]: https://docs.ansible.com/ansible/latest/modules/apt_key_module.html#apt-key-module
+[40]: https://docs.ansible.com/ansible/latest/modules/apt_repository_module.html#apt-repository-module
+[41]: https://docs.ansible.com/ansible/latest/modules/bundler_module.html#bundler-module
+[42]: https://docs.ansible.com/ansible/latest/modules/gem_module.html#gem-module
 1) One playbook one play
 disable provisioning in teraform app/db modules
 `terrafotm destroy && terraform apply`
@@ -291,6 +296,17 @@ ansible-playbook reddit_app2.yml --tags deploy-tag
 ansible-playbook site.yml --check
 ansible-playbook site.yml
 ```
-4) packer provision vs ansible
+4) Packer provision vs ansible
 [Ansible modules][36]
 [Ansible loops][37]
+Using modules: [apt][38] [apt_key][39] [apt_repository][40]
+[bundler][41] [gem][42]
+```
+packer validate -var-file=packer/variables.json packer/app.json
+packer validate -var-file=packer/variables.json packer/db.json
+packer build -var-file=packer/variables.json packer/app.json
+packer build -var-file=packer/variables.json packer/db.json
+cd terraform/stage && terraform destroy && terraform apply
+cd ../../ansible && ansible-playbook site.yml --check && \
+ansible-playbook site.yml
+```

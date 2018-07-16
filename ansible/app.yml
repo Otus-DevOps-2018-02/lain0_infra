@@ -15,8 +15,10 @@
         dest: /home/appuser/db_config
         owner: appuser
         group: appuser
+
     - name: enable puma
       systemd: name=puma enabled=yes
+
   handlers:
     - name: reload puma
       systemd: name=puma state=restarted
