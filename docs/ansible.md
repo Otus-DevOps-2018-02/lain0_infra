@@ -15,5 +15,11 @@ ANSIBLE_DEBUG=1 ansible all -i inventory.yml -m ping
 # lint `ansible-lint` .
 # `ansible-playbook check` .
 
-# limit hosts to apply
+# `--limit` for filtering for hostname applying playbook
+```
 ansible-playbook reddit_app.yml --check --limit db
+```
+# `--tags` for filtering on tags applying playbook
+```
+ansible-playbook reddit_app.yml --check --limit app --tags deploy-tag
+```

@@ -185,7 +185,7 @@ now we can keep tf state in [GCP Remote backends][18]
 we need backends.tf vs `backends` secton in prod and stage configs to save and
 use it's stages from cloud
 
-##### Task *
+#### Task *
 Terraform locks tf state in Remote backends, while applying, so another tf job fails vs Error 412: Precondition Failed
 
 # hw09 Ansible
@@ -257,11 +257,15 @@ disable provisioning in teraform app/db modules
 define variables
 `ansible-playbook reddit_app.yml --check --limit db`
 # Handlers
-handlers run only after another tasks notification
+handlers run only after another tasks notification like restart daemon on config change
 ```
-ansible-playbook reddit_app.yml --check --limit d
+ansible-playbook reddit_app.yml --check --limit db
 ansible-playbook reddit_app.yml --limit db
 ```
-
+deploy vs module git in `reddit_app.yml` playbook vs tag: deploy-tag
+```
+ansible-playbook reddit_app.yml --check --limit app --tags deploy-tag
+ansible-playbook reddit_app.yml --limit app --tags deploy-tag
+```
 ) one playbook many scenarios
 ) multy playbooks
