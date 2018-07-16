@@ -250,13 +250,15 @@ after module git cloned it on server and changed=1
 
 # hw10 Ansible Playbooks Templays
 [32]: https://gist.githubusercontent.com/Artemmkin/7609a03210e66af90d12bc59a54f6e3f/raw/690bebc6ab17b3a50b82667873c03c0722e8773b/puma.service
+[33]: https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#task-and-handler-organization-for-a-role
+[34]: https://gist.githubusercontent.com/Artemmkin/b0d74e5e439cb2865597567c3e17170c/raw/588aa069cf39e887595f97de7fd0be86b6b6417d/mongo_play2.yaml
 1) One playbook one play
 disable provisioning in teraform app/db modules
 `terrafotm destroy && terraform apply`
 `andible-playlook --check reddit_app.yml`
 define variables
 `ansible-playbook reddit_app.yml --check --limit db`
-# Handlers
+# [Handlers][33]
 handlers run only after another tasks notification like restart daemon on config change
 ```
 ansible-playbook reddit_app.yml --check --limit db
@@ -267,5 +269,18 @@ deploy vs module git in `reddit_app.yml` playbook vs tag: deploy-tag
 ansible-playbook reddit_app.yml --check --limit app --tags deploy-tag
 ansible-playbook reddit_app.yml --limit app --tags deploy-tag
 ```
-) one playbook many scenarios
-) multy playbooks
+2) one playbook many plays
+- Split main play, add new reddit_app2.yml, group tasks by tags
+- Define separate play for configuration Mongodb
+```
+ansible-playbook reddit_app2.yml --tags db-tag --check
+ansible-playbook reddit_app2.yml --tags db-tag
+ansible-playbook reddit_app2.yml --tags app-tag --check
+ansible-playbook reddit_app2.yml --tags app-tag
+```
+Deploy
+```
+ansible-playbook reddit_app2.yml --tags deploy-tag --check
+ansible-playbook reddit_app2.yml --tags deploy-tag
+```
+3) multi Playbooks
