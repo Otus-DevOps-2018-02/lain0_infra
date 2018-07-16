@@ -1,0 +1,28 @@
+---
+- name: install mongodb
+  hosts: db
+  tags: db-tag
+  become: true
+  tasks:
+    - name: Add mongo ppa key
+      apt_key: >
+        keyserver=hkp://keyserver.ubuntu.com:80
+        id=EA312927
+        state=present
+  tasks:
+    - name: Add mongo sources list
+      # sudo: yes
+      lineinfile: >
+        line="deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse"
+        dest=/etc/apt/sources.list.d/mongodb-org-3.2.list
+        state=present
+        create=yes
+  tasks:
+    - name: apt install mongo
+      # sudo: yes
+      apt: name=mongodb-org state=latest update_cache=yes
+      notify: restart mongod
+
+  handlers:
+    - name: restart mongod
+      service: name=mongod state=restarted
