@@ -310,3 +310,10 @@ cd terraform/stage && terraform destroy && terraform apply
 cd ../../ansible && ansible-playbook site.yml --check && \
 ansible-playbook site.yml
 ```
+
+# hw11 Ansible Galaxy Roles
+[43]: https://galaxy.ansible.com/home
+1) [Ansible Roles and Ansible Galaxy][43]
+
+2) Make 2 enviroments
+3) Use community role nginx
