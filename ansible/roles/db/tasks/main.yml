@@ -7,3 +7,8 @@
     dest: /etc/mongod.conf
     mode: 0644
   notify: restart mongod
+
+### task for output env via ansible debug module
+- name: Show info about the env this host belongs to
+  debug:
+    msg: "This host is in {{ env }} environment!!!"

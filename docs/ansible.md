@@ -23,3 +23,14 @@ ansible-playbook reddit_app.yml --check --limit db
 ```
 ansible-playbook reddit_app.yml --check --limit app --tags deploy-tag
 ```
+
+# debug
+```
+export ANSIBLE_STRATEGY=debug
+```
+in playbook:
+```
+- hosts: localhost
+  strategy: debug
+    tasks:
+```
