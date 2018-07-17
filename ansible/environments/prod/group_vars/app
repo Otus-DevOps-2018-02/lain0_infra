@@ -4,5 +4,5 @@ nginx_sites:
     - listen 80
     - server_name "reddit"
     - location / {
-      proxy_pass http://127.0.0.1:9292;
-    }
+        proxy_pass http://127.0.0.1:9292;
+      }

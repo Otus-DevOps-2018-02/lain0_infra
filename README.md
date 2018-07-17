@@ -315,7 +315,7 @@ ansible-playbook site.yml
 [43]: https://galaxy.ansible.com/home
 [44]: https://docs.ansible.com/ansible/latest/modules/debug_module.html
 [45]: https://github.com/jdauphant/ansible-role-nginx
-[46]:
+[46]: https://docs.ansible.com/ansible/devel/user_guide/vault.html
 1) [Ansible Roles and Ansible Galaxy][43]
 ```
 ansible-galaxy init app
@@ -347,6 +347,8 @@ using [module debug][44] we can output msg
 3) Use [ansible-galaxy community role jdauphant.nginx][45]
 install role `ansible-galaxy install -r environments/stage/requirements.yml`
 jdauphant.nginx role needs gathering facts == True in ansible config
-`cd terraform/stage && terraform apply`
-
+```
+cd terraform/stage && terraform apply
+ansible-playbook -i environments/prod/inventory playbooks/site.yml
+```
 4) [Ansible Voult][46]
