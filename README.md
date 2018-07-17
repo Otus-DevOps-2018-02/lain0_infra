@@ -314,6 +314,17 @@ ansible-playbook site.yml
 # hw11 Ansible Galaxy Roles
 [43]: https://galaxy.ansible.com/home
 1) [Ansible Roles and Ansible Galaxy][43]
-
+```
+ansible-galaxy init app
+ansible-galaxy init db
+```
+db && app roles
+cd terraform/stage && terraform destroy && terraform apply -auto-approve=false
+ansible-playbook site.yml --check
+ansible-playbook site.yml
+```
 2) Make 2 enviroments
+```
+ansible-playbook -i environments/prod/inventory deploy.yml
+```
 3) Use community role nginx
