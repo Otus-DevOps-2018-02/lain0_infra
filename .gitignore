@@ -12,6 +12,8 @@ packer/packer
 ## Ansible
 ansible/ansible2.4
 ansible/=2.4
-#### Ansible 2
+## Ansible 2
 *.retry
-#
+## Ansible 3 ansible-galaxy comunity role jdauphant.nginx
+jdauphant.nginx
+##

@@ -314,6 +314,7 @@ ansible-playbook site.yml
 # hw11 Ansible Galaxy Roles
 [43]: https://galaxy.ansible.com/home
 [44]: https://docs.ansible.com/ansible/latest/modules/debug_module.html
+[45]: https://github.com/jdauphant/ansible-role-nginx
 1) [Ansible Roles and Ansible Galaxy][43]
 ```
 ansible-galaxy init app
@@ -340,7 +341,6 @@ cd ../prod && terraform apply -auto-approve=false
 cd ../../ansible
 ansible-playbook -i environments/prod/inventory playbooks/site.yml --check
 ansible-playbook -i environments/prod/inventory playbooks/site.yml
-
-using [module debug][44] we can output ms
-
-3) Use community role nginx
+```
+using [module debug][44] we can output msg
+3) Use [ansible-galaxy community role jdauphant.nginx][45]
