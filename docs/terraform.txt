@@ -3,7 +3,7 @@
 
 # before using terraform we need to del sshkeys from web
 # Terraform loads *.tf from current_directory
-# initialize terraform
+# initialize terraform, and install all nessesery modules like template
 terraform init
 
 # see all changes
@@ -37,5 +37,14 @@ terraform taint google_compute_instance.app
 # destroy
 terraform destroy
 
-#terraform linter formater
+# terraform linter formater
 terraform fmt
+
+# import
+terraform import google_compute_firewall.firewall_ssh default-
+allow-ssh
+
+# load terraform modules
+terraform get
+
+#

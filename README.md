@@ -25,11 +25,12 @@ gcloud compute firewall-rules create puma-server \
   --priority 1000 \
   --target-tags puma-server
 ```
+Deploy [monolith](https://github.com/express42/reddit.git) to GCP via `git clone`
 
 # hw06 Packer
 [0]: https://www.packer.io/downloads.html
 1) Install [Packer][0] make alias in .bashrc_aliases
-alias packer='~/packer'
+`alias packer='~/packer'`
 2) set project_id
 ```
 gcloud config set project infra-198609
@@ -78,13 +79,11 @@ terraform apply --auto-approve=true
 6) Add terraform sshkey
 7) Filter Terraform output values
 ```
-terraform refresh
-terraform output
+terraform refresh && terraform output
 ```
 8) Open port for our application - puma server tcp/9292
 ```
-terraform plan
-terraform apply
+terraform plan && terraform apply
 ```
 9) Add tag to VM
 10) Provisioners. Add provisioner section in main.tf,
@@ -102,4 +101,84 @@ terraform apply --auto-approve=true
 ```
 terraform fmt
 ```
-17) ?* keys added via web interface after "terraform apply" are deleted
+17) ?* keys added via web interface after `terraform apply` are deleted
+
+# hw08 Terraform2
+[8]: https://console.cloud.google.com/networking/networks/list?project=infra-198609&authuser=1
+[9]: https://www.terraform.io/intro/getting-started/dependencies.html
+[10]: https://www.terraform.io/docs/configuration/resources.html
+[11]: https://github.com/express42/otus-snippets
+[12]: https://www.terraform.io/docs/providers/template/index.html
+[13]: https://www.terraform.io/docs/modules/sources.html
+[14]: https://cloud.google.com/vpc/docs/using-firewalls
+[15]: https://registry.terraform.io/
+[16]: https://registry.terraform.io/modules/SweetOps/storage-bucket/google
+[17]: https://registry.terraform.io/browse?provider=google
+[18]: https://www.terraform.io/docs/backends/index.html
+1) Recreate infrastructure by:
+```
+terraform apply
+```
+2) add default iptables -A ssh rule ACCEPT vs main.tf
+3) import existing infrastructure in terraform
+import GCP firewall ssh default policy:
+```
+terraform import google_compute_firewall.firewall_ssh default-allow-ssh
+terraform apply --auto-approve=true
+```
+4) Resources
+from webinterface delete [Bastion Statis IP][8]
+5) del all resources and recreate
+```
+terraform destroy && terraform apply --auto-approve=true
+```
+6) Another resourse attribute and implicit [Resource Dependencies][9]
+Dependencies affect priority order for applying/creation of instances
+```
+terraform destroy
+terraform plan && terraform apply
+```
+Terraform supports explicit [Dependency][10] `depends_on` .
+7) Resources structuring
+Separate main.tf into two configs
+via packer make 2 new images in GCP
+```
+packer build -var-file=variables.json app.json
+packer build -var-file=variables.json db.json
+```
+we need mongo to bind IP to be not 127.0.0.1
+provision new mongodb.conf and puma.service vs ENV database URL
+get [terraform template provider][12] plugin vs `terraform init`
+add template var in puma.service.tpl and in app.tf  and recreate instance
+`terraform taint google_compute_instance.app` .
+8) Modules [Terraform modules][13]
+cp .tf cfgs into modules folders files and `terraform init && terraform get` .
+create module "vpc" , now we cat set source_ip from main.tf see and cachanges by [gcp firewall-rules list][14]:
+```
+gcloud compute firewall-rules list --filter network=default \
+    --sort-by priority \
+    --format="table(
+        name,
+        priority,
+        sourceRanges.list():label=[SRC_RANGES],
+        destinationRanges.list():label=[DEST_RANGES],
+        allowed[].map().firewall_rule().list():label=ALLOW,
+        denied[].map().firewall_rule().list():label=DENY,
+        sourceTags.list():label=[SRC_TAGS],
+        targetTags.list():label=[TARGET_TAGS]
+        )"
+```
+9) Reuse modules
+prod and stage can use modules app and db like DRY way
+10) Terraform [Module Registry][15]
+install module [Terraform ][16] `terraform init`
+list backets in GCP
+```
+gsutil ls
+```
+now we can keep tf state in [GCP Remote backends][18]
+we need backends.tf vs `backends` secton in prod and stage configs to save and
+use it's stages from cloud
+
+##### Task *
+Terraform locks tf state in Remote backends, while applying, so another tf job fails vs Error 412: Precondition Failed

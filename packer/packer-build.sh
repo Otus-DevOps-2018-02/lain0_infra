@@ -1,8 +1,12 @@
-#!/bin/bash -x
+#!/bin/bash
 # packer-build.sh
 
-echo "build for build or validate for validate"
+echo "./packer-build.sh build app.json for build"
+echo "./packer-build.sh validate app.json for validate"
 
-packer $1 \
-  -var-file=variables.json \
-  ubuntu16.json
+/opt/devops/packer $1 -var-file=variables.json $2
+
+# packer $1 \
+#   -var-file=variables.json \
+#   ubuntu16.json
+

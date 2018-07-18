@@ -7,19 +7,7 @@ variable region {
   default     = "europe-west1"
 }
 
-variable public_key_path {
-  description = "Path to the public key used for ssh access"
-}
-
-variable disk_image {
-  description = "Disk image"
-}
-
-variable privite_key_path {
-  description = "Privite ssh-key provisioner path"
-}
-
-variable zone {
-  description = "Zone"
-  default     = "europe-west1-b"
+variable bucket_name {
+  description = "GCP backends bucket name"
+  default     = ["storage-bucket-lain0_reddit-prod", "storage-bucket-lain0_reddit-stage"]
 }
