@@ -1,7 +1,6 @@
 .secrets
 ## Packer
 packer/variables.json
-packer/packer
 ## Terraform
 *.tfstate
 *.tfstate.*.backup
