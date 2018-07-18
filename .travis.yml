@@ -26,20 +26,26 @@ install:
   - sudo unzip /tmp/tflint.zip -d /usr/bin/
   # upgrade pip install ansible
   # - sudo pip install -qq --upgrade pips
+  - sudo pip install -q --upgrade pip
   - sudo pip install ansible==${ANSIBLE_VERSION} ansible-lint==${ANSIBLE_LINT_VERSION} yamllint==${YAML_LINT_VERSION}
 script:
   # packer
+  - cd ${TRAVIS_BUILD_DIR}/packer
+  - packer validate -var-file=variables.json.example ubuntu16.json
+  - packer validate -var-file=variables.json.example immutable.json
   - cd ${TRAVIS_BUILD_DIR}
-  - packer validate -var-file=packer/variables.json packer/app.json
-  - packer validate -var-file=packer/variables.json packer/db.json
+  - packer validate -var-file=packer/variables.json.example packer/app.json
+  - packer validate -var-file=packer/variables.json.example packer/db.json
   # terraform fmt
   - cd ${TRAVIS_BUILD_DIR}/terraform \
     terraform fmt $(git ls-files '*.tf') -check
-  - tflint
+  # - tflint
   - cd ${TRAVIS_BUILD_DIR}/terraform\stage\
+  - terraform init -backend=false && terraform get
   - terraform validate
   - tflint
   - cd ${TRAVIS_BUILD_DIR}/terraform\prod\
+  - terraform init -backend=false && terraform get
   - terraform validate
   - tflint
   - cd ${TRAVIS_BUILD_DIR}/ansible \
