@@ -3,7 +3,7 @@ dist: trusty
 sudo: required
 language: bash
 env:
-  - PACKER_VERSION=1.2.1 TERRAFORM_VERSION=0.11.7 TFLINT_VERSION=0.1 ANSIBLE_VERSION=2.6.1 ANSIBLE_LINT_VERSION=3.4.23 YAML_LINT_VERSION=1.11.1
+  - PACKER_VERSION=1.2.1 TERRAFORM_VERSION=0.11.7 TFLINT_VERSION=0.5.4 ANSIBLE_VERSION=2.6.1 ANSIBLE_LINT_VERSION=3.4.23 YAML_LINT_VERSION=1.11.1
 before_install:
   - curl https://raw.githubusercontent.com/express42/otus-homeworks/2018-02/run.sh |
     bash
@@ -21,15 +21,34 @@ install:
       https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
       > /tmp/terraform.zip
   - sudo unzip /tmp/terraform.zip -d /usr/bin/
+  # install tflint
+  - >
+      travis_retry curl
+      https://github.com/wata727/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip
+      > /tmp/tflint.zip
+  - sudo unzip /tmp/tflint.zip -d /usr/bin/
   # upgrade pip install ansible
   # - sudo pip install -qq --upgrade pips
   - sudo pip install ansible==${ANSIBLE_VERSION} ansible-lint==${ANSIBLE_LINT_VERSION} yamllint==${YAML_LINT_VERSION}
 script:
-  #terraform
-  - terraform $(git ls-files '*.tf') -check=false -diff=false
-  - ansible-lint playbooks/site.yml --exclude=roles/jdauphant.nginx
+  # packer
+  - cd ${TRAVIS_BUILD_DIR}
+  - packer validate -var-file=packer/variables.json packer/app.json
+  - packer validate -var-file=packer/variables.json packer/db.json
+  # terraform fmt
+  - cd ${TRAVIS_BUILD_DIR}/terraform \
+    terraform fmt $(git ls-files '*.tf') -check
+  - tflint
+  - cd ${TRAVIS_BUILD_DIR}/terraform\stage\
+  - terraform validate
+  - tflint
+  - cd ${TRAVIS_BUILD_DIR}/terraform\prod\
+  - terraform validate
+  - tflint
+  - cd ${TRAVIS_BUILD_DIR}/ansible \
+    ansible-lint playbooks/site.yml --exclude=roles/jdauphant.nginx
   # check all yaml files
-  - yamllint --strict $(git ls-files '*.yaml' '*.yml'|grep -vE ".travis.yml|credentials.yml") -c .yamllint.yml
+  # - yamllint --strict $(git ls-files '*.yaml' '*.yml'|grep -vE ".travis.yml|credentials.yml") -c .yamllint.yml
 notifications:
   slack:
     secure: LcCET8vbNRth1DflxU3KuTNbNwdCtbqMvf1sgeRxeSVf+oA/jZZBjA8qgyGlLa5pNY1ntUeXODbTJ85Z6qCw5MSRJO35CiICvk+7PfG3+dpQLAgbm5VDhGyM9hH9KSLCGXlAafrt8UplPEVI+uz76FiusGQVYglmhfudHqaoMeIFcO9zSVJpdn3D6wE9wXZ+g8ugq6KFbRXi0e1oVyOWTO8Ke9rooM4HSAMKs9iUxys/9bO2etXA4SbcQlZyuwGQN4L8VT++g4g9UR/Z10q9bbf1GF2GvqxUifZ2GC5nOVWZTcVM/vvknWS3ksgylC+ToCj2b/vb/5y3EiIwszWJ1XJ9bJWLIJKUiFf5hPf2k0POhO7jV2JNHB5oicW2Lbcy8X7NqM0W5lFgsSBwU16MJSgN7qy/VqUpBb/8eUA1dJ4HsZ2nUIbe6j7Mp/QJJ/KDjbYWSTosrKvx6zmu5P+qkoIpyWFBZi2SppWNPHOtf5j0NaPr0SGci9aVkS9AOswPhm3aV5QmwJM3K8rhmZA0nFqOvSoWFMxlAIYPuW5k4u9lH8ius5AHR+lc4zuICCoqKsPn0SMeuoJg59WeQGodZbPOsF+pnob18w4idderIR32F37TgFyMXSwU7kV275hXyjr3azu9I5MlCxWpQk6JnKw2KKkepFP/w66FuM/r2wI=
