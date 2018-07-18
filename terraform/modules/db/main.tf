@@ -27,18 +27,18 @@ resource "google_compute_instance" "db" {
     private_key = "${file(var.privite_key_path)}"
   }
 
-  provisioner "file" {
-    source      = "${path.module}/files/mongod.conf"
-    destination = "/tmp/mongod.conf"
-  }
+  # provisioner "file" {
+  #   source      = "${path.module}/files/mongod.conf"
+  #   destination = "/tmp/mongod.conf"
+  # }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo cp /tmp/mongod.conf /etc/mongod.conf && sudo systemctl restart mongod",
-    ]
+  # provisioner "remote-exec" {
+  #   inline = [
+  #     "sudo cp /tmp/mongod.conf /etc/mongod.conf && sudo systemctl restart mongod",
+  #   ]
 
-    # script = "${path.module}/files/mongo-bind.sh"
-  }
+  #   # script = "${path.module}/files/mongo-bind.sh"
+  # }
 }
 
 # access to DB for instance tagged reddit-app

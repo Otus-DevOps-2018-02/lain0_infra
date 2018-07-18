@@ -12,3 +12,6 @@ packer/packer
 ## Ansible
 ansible/ansible2.4
 ansible/=2.4
+#### Ansible 2
+*.retry
+#

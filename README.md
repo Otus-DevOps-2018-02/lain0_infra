@@ -138,7 +138,10 @@ Dependencies affect priority order for applying/creation of instances
 terraform destroy
 terraform plan && terraform apply
 ```
-Terraform supports explicit [Dependency][10] `depends_on` .
+Terraform supports explicit [Dependency][10]
+```
+depends_on
+```
 7) Resources structuring
 Separate main.tf into two configs
 via packer make 2 new images in GCP
@@ -150,7 +153,9 @@ we need mongo to bind IP to be not 127.0.0.1
 provision new mongodb.conf and puma.service vs ENV database URL
 get [terraform template provider][12] plugin vs `terraform init`
 add template var in puma.service.tpl and in app.tf  and recreate instance
-`terraform taint google_compute_instance.app` .
+```
+terraform taint google_compute_instance.app
+```
 8) Modules [Terraform modules][13]
 cp .tf cfgs into modules folders files and `terraform init && terraform get` .
 create module "vpc" , now we cat set source_ip from main.tf see and cachanges by [gcp firewall-rules list][14]:
@@ -180,7 +185,7 @@ now we can keep tf state in [GCP Remote backends][18]
 we need backends.tf vs `backends` secton in prod and stage configs to save and
 use it's stages from cloud
 
-##### Task *
+#### Task *
 Terraform locks tf state in Remote backends, while applying, so another tf job fails vs Error 412: Precondition Failed
 
 # hw09 Ansible
@@ -242,3 +247,66 @@ after module git cloned it on server and changed=1
 #### Task vs *
 14) [Dynamic inventory][29] vs json config
 `ansible all -i inventory.json -m ping`
+
+# hw10 Ansible Playbooks Templates
+[32]: https://gist.githubusercontent.com/Artemmkin/7609a03210e66af90d12bc59a54f6e3f/raw/690bebc6ab17b3a50b82667873c03c0722e8773b/puma.service
+[33]: https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html#task-and-handler-organization-for-a-role
+[34]: https://gist.githubusercontent.com/Artemmkin/b0d74e5e439cb2865597567c3e17170c/raw/588aa069cf39e887595f97de7fd0be86b6b6417d/mongo_play2.yaml
+[35]: https://docs.ansible.com/ansible/latest/user_guide/intro_dynamic_inventory.html
+[36]: https://docs.ansible.com/ansible/latest/modules/list_of_all_modules.html
+[37]: https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html
+[38]: https://docs.ansible.com/ansible/latest/modules/apt_module.html#apt-module
+[39]: https://docs.ansible.com/ansible/latest/modules/apt_key_module.html#apt-key-module
+[40]: https://docs.ansible.com/ansible/latest/modules/apt_repository_module.html#apt-repository-module
+[41]: https://docs.ansible.com/ansible/latest/modules/bundler_module.html#bundler-module
+[42]: https://docs.ansible.com/ansible/latest/modules/gem_module.html#gem-module
+1) One playbook one play
+disable provisioning in teraform app/db modules
+`terrafotm destroy && terraform apply`
+`andible-playlook --check reddit_app.yml`
+define variables
+`ansible-playbook reddit_app.yml --check --limit db`
+# [Handlers][33]
+handlers run only after another tasks notification like restart daemon on config change
+```
+ansible-playbook reddit_app.yml --check --limit db
+ansible-playbook reddit_app.yml --limit db
+```
+deploy vs module git in `reddit_app.yml` playbook vs tag: deploy-tag
+```
+ansible-playbook reddit_app.yml --check --limit app --tags deploy-tag
+ansible-playbook reddit_app.yml --limit app --tags deploy-tag
+```
+2) one playbook many plays
+- Split main play, add new reddit_app2.yml, group tasks by tags
+- Define separate play for configuration Mongodb
+```
+ansible-playbook reddit_app2.yml --tags db-tag --check
+ansible-playbook reddit_app2.yml --tags db-tag
+ansible-playbook reddit_app2.yml --tags app-tag --check
+ansible-playbook reddit_app2.yml --tags app-tag
+```
+Deploy
+```
+ansible-playbook reddit_app2.yml --tags deploy-tag --check
+ansible-playbook reddit_app2.yml --tags deploy-tag
+```
+3) multi Playbooks
+```
+ansible-playbook site.yml --check
+ansible-playbook site.yml
+```
+4) Packer provision vs ansible
+[Ansible modules][36]
+[Ansible loops][37]
+Using modules: [apt][38] [apt_key][39] [apt_repository][40]
+[bundler][41] [gem][42]
+```
+packer validate -var-file=packer/variables.json packer/app.json
+packer validate -var-file=packer/variables.json packer/db.json
+packer build -var-file=packer/variables.json packer/app.json
+packer build -var-file=packer/variables.json packer/db.json
+cd terraform/stage && terraform destroy && terraform apply
+cd ../../ansible && ansible-playbook site.yml --check && \
+ansible-playbook site.yml
+```

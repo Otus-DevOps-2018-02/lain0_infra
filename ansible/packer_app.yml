@@ -1,0 +1,18 @@
+---
+- name: install ruby && Bundler
+  hosts: all
+  gather_facts: no
+  become: true
+  tasks:
+    - name: Install ruby and rubygems and required packages
+      apt: "name={{ item }} state=present"
+      with_items:
+        - ruby-full
+        - ruby-bundler
+        - build-essential
+  # tasks:
+  #   - name: install gem bundler
+  #     gem:
+  #       name: bundler
+  #       version: "latest"
+  #       state: present
