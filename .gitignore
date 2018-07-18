@@ -1,1 +1,3 @@
 .secrets
+packer/variables.json
+packer/packer
