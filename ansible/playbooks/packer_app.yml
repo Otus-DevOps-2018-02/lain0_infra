@@ -10,7 +10,6 @@
         - ruby-full
         - ruby-bundler
         - build-essential
-  # tasks:
   #   - name: install gem bundler
   #     gem:
   #       name: bundler

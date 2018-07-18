@@ -14,7 +14,7 @@
         groups: "{{ item.value.groups | default(omit) }}"
       with_dict: "{{ credentials.users }}"
 
-# task enable PasswordAuthentication
+    # task enable PasswordAuthentication
     - name: Allow password authentication
       lineinfile: dest=/etc/ssh/sshd_config
                   regexp="^PasswordAuthentication"
