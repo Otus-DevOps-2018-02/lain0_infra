@@ -336,7 +336,7 @@ cd terraform/stage && terraform destroy && terraform apply -auto-approve=false
 cd ../../ansible
 ansible-playbook playbooks/site.yml --check
 ansible-playbook playbooks/site.yml
-
+```
 test prod env ansible:
 ```
 cd terraform/stage && terraform destroy
@@ -363,3 +363,12 @@ test playbook:
 ```
 ansible-playbook -i environments/prod/inventory playbooks/site.yml
 ```
+
+# TASK **
+[49]: https://medium.com/@Nklya/%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5-%D1%82%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2-travisci-2b5ef9adb16e
+[50]: https://github.com/hashicorp/terraform/blob/master/.travis.yml
+[51]: https://docs.travis-ci.com/user/getting-started/
+
+TravisCI.yml
+travis CI supports YAML 1.1.
+[terraform][50]
