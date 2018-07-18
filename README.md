@@ -189,7 +189,7 @@ use it's stages from cloud
 Terraform locks tf state in Remote backends, while applying, so another tf job fails vs Error 412: Precondition Failed
 
 # hw09 Ansible
-[19]: https://habrahabr.ru/company/ruvds/blog/340306/
+
 [20]: https://raw.githubusercontent.com/express42/otus-snippets/master/hw-10/ansible.cfg
 [21]: http://docs.ansible.com/ansible/latest/intro_inventory.html
 [22]: https://gist.github.com/Nklya/95a875d054d7956a54ddcd88b23f58a5
@@ -208,7 +208,7 @@ pip install -r requirements.txt
 pip install ansible>=2.4
 easy_install `cat requirements.txt`
 ```
-2) Create [inventory][19] file
+2) Create inventory file
 3) Ansible can ping host
 ```
 ansible appserver -i ./inventory -m ping
@@ -266,7 +266,7 @@ disable provisioning in teraform app/db modules
 `andible-playlook --check reddit_app.yml`
 define variables
 `ansible-playbook reddit_app.yml --check --limit db`
-# [Handlers][33]
+## [Handlers][33]
 handlers run only after another tasks notification like restart daemon on config change
 ```
 ansible-playbook reddit_app.yml --check --limit db
@@ -369,6 +369,5 @@ ansible-playbook -i environments/prod/inventory playbooks/site.yml
 [50]: https://github.com/hashicorp/terraform/blob/master/.travis.yml
 [51]: https://docs.travis-ci.com/user/getting-started/
 
-TravisCI.yml
-travis CI supports YAML 1.1.
-[terraform][50]
+TravisCI.yml - travis CI supports YAML 1.1.
+- [terraform][50]
