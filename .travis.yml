@@ -25,6 +25,7 @@ install:
   # - sudo pip install -qq --upgrade pips
   - sudo pip install ansible==${ANSIBLE_VERSION} ansible-lint==${ANSIBLE_LINT_VERSION} yamllint==${YAML_LINT_VERSION}
 script:
+  - ansible-lint playbooks/site.yml --exclude=roles/jdauphant.nginx
   # check all yaml files
   - yamllint --strict $(git ls-files '*.yaml' '*.yml'|grep -v .travis.yml) -c .yamllint.yml
 notifications:
