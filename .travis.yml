@@ -22,7 +22,8 @@ install:
       > /tmp/terraform.zip
   - sudo unzip /tmp/terraform.zip -d /usr/bin/
   # install tflint
-  - wget -qO- https://github.com/wata727/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip | sudo unzip -d /usr/bin/
+  - wget -qO- https://github.com/wata727/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip > /tmp/tflint.zip
+  - sudo unzip /tmp/tflint.zip -d /usr/bin/
   # upgrade pip install ansible
   # - sudo pip install -qq --upgrade pips
   - sudo pip install ansible==${ANSIBLE_VERSION} ansible-lint==${ANSIBLE_LINT_VERSION} yamllint==${YAML_LINT_VERSION}
