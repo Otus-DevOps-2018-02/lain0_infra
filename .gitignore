@@ -16,4 +16,5 @@ ansible/=2.4
 *.retry
 ## Ansible 3 ansible-galaxy comunity role jdauphant.nginx
 jdauphant.nginx
+vault.key
 ##

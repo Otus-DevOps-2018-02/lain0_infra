@@ -316,6 +316,8 @@ ansible-playbook site.yml
 [44]: https://docs.ansible.com/ansible/latest/modules/debug_module.html
 [45]: https://github.com/jdauphant/ansible-role-nginx
 [46]: https://docs.ansible.com/ansible/devel/user_guide/vault.html
+[47]: https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html
+[48]: https://raw.githubusercontent.com/express42/otus-snippets/master/hw-12/groupvars
 1) [Ansible Roles and Ansible Galaxy][43]
 ```
 ansible-galaxy init app
@@ -352,3 +354,12 @@ cd terraform/stage && terraform apply
 ansible-playbook -i environments/prod/inventory playbooks/site.yml
 ```
 4) [Ansible Voult][46]
+encrypt credentials.yml vs secret voult.key
+```
+ansible-vault encrypt environments/prod/credentials.yml
+ansible-vault encrypt environments/stage/credentials.yml
+```
+test playbook:
+```
+ansible-playbook -i environments/prod/inventory playbooks/site.yml
+```

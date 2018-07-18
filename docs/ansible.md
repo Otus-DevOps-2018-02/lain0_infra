@@ -11,7 +11,7 @@ ANSIBLE_DEBUG=1 ansible all -i inventory.yml -m ping
 ```
 
 ############################################################
-# ansible-playbook
+# Ansible-playbook
 # lint `ansible-lint` .
 # `ansible-playbook check` .
 
@@ -33,4 +33,11 @@ in playbook:
 - hosts: localhost
   strategy: debug
     tasks:
+```
+############################################################
+# ansible-vault
+```
+ansible-vault encrypt environments/prod/credentials.yml
+ansible-vault decrypt environments/prod/credentials.yml
+ansible-vault edit environments/prod/credentials.yml
 ```
