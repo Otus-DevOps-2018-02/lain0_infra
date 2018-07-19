@@ -266,7 +266,7 @@ disable provisioning in teraform app/db modules
 `andible-playlook --check reddit_app.yml`
 define variables
 `ansible-playbook reddit_app.yml --check --limit db`
-## [Handlers][33]
+### [Handlers][33]
 handlers run only after another tasks notification like restart daemon on config change
 ```
 ansible-playbook reddit_app.yml --check --limit db
