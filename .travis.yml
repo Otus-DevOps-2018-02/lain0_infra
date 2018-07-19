@@ -40,11 +40,11 @@ script:
   - cd ${TRAVIS_BUILD_DIR}/terraform \
     terraform fmt $(git ls-files '*.tf') -check
   # - tflint
-  - cd ${TRAVIS_BUILD_DIR}/terraform\stage\
+  - cd ${TRAVIS_BUILD_DIR}/terraform/stage/
   - terraform init -backend=false && terraform get
   - terraform validate --var-file=terraform.tfvars.example
   - tflint --var-file=terraform.tfvars.example
-  - cd ${TRAVIS_BUILD_DIR}/terraform\prod\
+  - cd ${TRAVIS_BUILD_DIR}/terraform/prod/
   - terraform init -backend=false && terraform get
   - terraform validate --var-file=terraform.tfvars.example
   - tflint --var-file=terraform.tfvars.example
