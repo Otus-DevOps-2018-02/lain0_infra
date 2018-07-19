@@ -1,0 +1,5 @@
+# .rubocop.yml
+
+# for Vagrantfile (
+Metrics/BlockLength:
+  Enabled: false

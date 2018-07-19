@@ -6,14 +6,14 @@
     - name: Deploy reddit version monolith via git
       git:
         repo: 'https://github.com/express42/reddit.git'
-        dest: /home/appuser/reddit
+        dest: "/home/{{ deploy_user }}/reddit"
         version: monolith
       notify: restart puma
 
     - name: bundle install
       bundler:
         state: present
-        chdir: /home/appuser/reddit
+        chdir: "/home/{{ deploy_user }}/reddit"
 
 
   handlers:

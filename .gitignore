@@ -16,4 +16,12 @@ ansible/=2.4
 ## Ansible 3 ansible-galaxy comunity role jdauphant.nginx
 jdauphant.nginx
 vault.key
+readme-branch.sh
+## Ansible 4  Vagrant & molecule
+.vagrant/
+*.log
+*.pyc
+.molecule
+.cache
+.pytest_cache
 ##
