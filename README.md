@@ -369,7 +369,8 @@ ansible-playbook -i environments/prod/inventory playbooks/site.yml
 [50]: https://github.com/hashicorp/terraform/blob/master/.travis.yml
 [51]: https://docs.travis-ci.com/user/getting-started/
 [52]: https://docs.travis-ci.com/user/environment-variables/#Global-Variables
-
+[53]: http://yamllint.readthedocs.io/en/stable/rules.html
 TravisCI.yml - travis CI supports YAML 1.1.
 - [terraform][50]
 - [travis variables][52]
+- [yamllint][53]
