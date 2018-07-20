@@ -385,6 +385,7 @@ TravisCI.yml - travis CI supports YAML 1.1.
 [60]: https://www.vagrantup.com/docs/provisioning/
 [61]: https://gist.github.com/jhass/a5ae80d87f18e53e7b56
 [62]: https://rubocop.readthedocs.io/en/latest/configuration/
+[63]: https://docs.python-guide.org/dev/virtualenvs/
 
 1) Local role developping via [vagrant][55] for provisioning vs
 [virtualbox][56]
@@ -407,6 +408,31 @@ Parameterize role
 extra_vars has highest priority in env
 test instanses: `vagrant destroy -f && vagrant`
 
+#### Task *
+add ansible.extra_vars in Vagrantfile for nginx role
+
 2) Testing roles via [Molecule][] and [Testinfra][]
+install env for python env to use molecule in Ubuntu16.04 vs system python3.5
+```
+sudo apt install python3.6-dev
+pip install virtualenv
+python3 -m virtualenv env
+pip install --user pipenv
+virtualenv --python=python3.6 ~/py3.6
+source ~/py3.6/bin/activate
+```
+
+```
+cd ansible/roles/db
+molecule init scenario --scenario-name default -r db -d vagrant
+```
+create test machine:
+```
+cd ansible/roles/db
+molecule create
+molecule list
+molecule login -h instance
+```
+
 3) Change in packer provisioning: use ansible roles instead ansible playbooks
 4) Task * Travis CI for autotests

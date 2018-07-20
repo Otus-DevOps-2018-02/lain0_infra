@@ -18,3 +18,9 @@ pre-commit init
 # yamllint
 `pip install yamllint`
 ## .yamlconfig - config
+#######################################
+`virtualenv --python=python3.6 myvenv`
+# molecule
+`pip install molecule`
+#######################################
+#######################################
