@@ -386,11 +386,13 @@ TravisCI.yml - travis CI supports YAML 1.1.
 [61]: https://gist.github.com/jhass/a5ae80d87f18e53e7b56
 [62]: https://rubocop.readthedocs.io/en/latest/configuration/
 [63]: https://docs.python-guide.org/dev/virtualenvs/
-[64]: http://testinfra.readthedocs.io/en/latest/modules.html
+[64]: https://molecule.readthedocs.io/en/latest/configuration.html
+[65]: http://testinfra.readthedocs.io/en/latest/modules.html
+[66]: https://gist.github.com/Artemmkin/e1c845e96589d5d71476f57ed931f1ac
 1) Local role developping via [vagrant][55] for provisioning vs
 [virtualbox][56]
 ```
-vagrant init && vagrant plugin update
+vagrant init && vagrant plugin update && vagrant validate
 vagrant up
 vagrant box list
 vagrant status
@@ -411,7 +413,7 @@ test instanses: `vagrant destroy -f && vagrant`
 #### Task *
 add ansible.extra_vars in Vagrantfile for nginx role
 
-2) Testing roles via [Molecule][] and [Testinfra][]
+2) Testing roles via [Molecule][64] and [Testinfra][65]
 install env for python env to use molecule in Ubuntu16.04 vs system python3.5
 ```
 sudo apt install python3.6-dev
@@ -435,4 +437,8 @@ molecule login -h instance
 ```
 
 3) Change in packer provisioning: use ansible roles instead ansible playbooks
-4) Task * Travis CI for autotests
+```
+gcloud compute images list --filter reddit
+packer validate -var-file=packer/variables.json packer/db.json
+packer validate -var-file=packer/variables.json packer/app.json
+```
