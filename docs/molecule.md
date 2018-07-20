@@ -23,3 +23,7 @@ molecule init scenario --scenario-name default -r rolename -d vagrant
 `molecule login -h instance`
 ### generate molecule role:
 `molecule init`
+### apply molecule configuration
+`molecule converge`
+### run molecule tets
+`molecule verify`
