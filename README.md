@@ -435,7 +435,14 @@ molecule create
 molecule list
 molecule login -h instance
 ```
-
+apply configuration to hosts
+```
+molecule converge
+```
+run test
+```
+molecule verify
+```
 3) Change in packer provisioning: use ansible roles instead ansible playbooks
 ```
 gcloud compute images list --filter reddit
