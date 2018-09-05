@@ -1,0 +1,18 @@
+---
+extends: default
+rules:
+  comments:
+    level: warning
+    min-spaces-from-content: 1
+  comments-indentation: disable
+  line-length:
+    max: 700
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 0
+  brackets:
+    min-spaces-inside: 0
+    max-spaces-inside: 0
+  indentation:
+    indent-sequences: consistent
+    spaces: consistent

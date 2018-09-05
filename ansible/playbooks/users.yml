@@ -1,0 +1,34 @@
+---
+- name: Create users
+  hosts: all
+  become: true
+
+  vars_files:
+    - "{{ inventory_dir }}/credentials.yml"
+
+  tasks:
+    - name: create users
+      user:
+        name: "{{ item.key }}"
+        password: "{{ item.value.password|password_hash('sha512', 65534|random(seed=inventory_hostname)|string) }}"
+        groups: "{{ item.value.groups | default(omit) }}"
+      with_dict: "{{ credentials.users }}"
+
+    # task enable PasswordAuthentication
+    - name: Allow password authentication
+      lineinfile: dest=/etc/ssh/sshd_config
+                  regexp="^PasswordAuthentication"
+                  line="PasswordAuthentication yes"
+                  state=present
+      notify: Restart ssh
+
+# # task PermitRootLogin yes
+#     - name: Allow root SSH access
+#       lineinfile: dest=/etc/ssh/sshd_config
+#                   regexp="^PermitRootLogin"
+#                   line="PermitRootLogin yes"
+#                   state=present
+#       notify: Restart ssh
+#   handlers:
+#     - name: Restart ssh
+#       service: name=ssh state=restarted

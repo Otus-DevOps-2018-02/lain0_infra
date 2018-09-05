@@ -1,3 +1,4 @@
+---
 - name: Deploy App && bundle install
   hosts: app
   tags: deploy-tag

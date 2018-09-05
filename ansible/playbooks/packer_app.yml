@@ -1,7 +1,7 @@
 ---
 - name: install ruby && Bundler
   hosts: all
-  gather_facts: no
+  gather_facts: false
   become: true
   tasks:
     - name: Install ruby and rubygems and required packages
@@ -10,9 +10,9 @@
         - ruby-full
         - ruby-bundler
         - build-essential
-  # tasks:
-  #   - name: install gem bundler
-  #     gem:
-  #       name: bundler
-  #       version: "latest"
-  #       state: present
+
+    # - name: install gem bundler
+    #   gem:
+    #     name: bundler
+    #     version: "latest"
+    #     state: present

@@ -189,7 +189,7 @@ use it's stages from cloud
 Terraform locks tf state in Remote backends, while applying, so another tf job fails vs Error 412: Precondition Failed
 
 # hw09 Ansible
-[19]: https://habrahabr.ru/company/ruvds/blog/340306/
+
 [20]: https://raw.githubusercontent.com/express42/otus-snippets/master/hw-10/ansible.cfg
 [21]: http://docs.ansible.com/ansible/latest/intro_inventory.html
 [22]: https://gist.github.com/Nklya/95a875d054d7956a54ddcd88b23f58a5
@@ -208,7 +208,7 @@ pip install -r requirements.txt
 pip install ansible>=2.4
 easy_install `cat requirements.txt`
 ```
-2) Create [inventory][19] file
+2) Create inventory file
 3) Ansible can ping host
 ```
 ansible appserver -i ./inventory -m ping
@@ -266,7 +266,7 @@ disable provisioning in teraform app/db modules
 `andible-playlook --check reddit_app.yml`
 define variables
 `ansible-playbook reddit_app.yml --check --limit db`
-# [Handlers][33]
+## [Handlers][33]
 handlers run only after another tasks notification like restart daemon on config change
 ```
 ansible-playbook reddit_app.yml --check --limit db
@@ -310,3 +310,67 @@ cd terraform/stage && terraform destroy && terraform apply
 cd ../../ansible && ansible-playbook site.yml --check && \
 ansible-playbook site.yml
 ```
+
+# hw11 Ansible Galaxy Roles
+[43]: https://galaxy.ansible.com/home
+[44]: https://docs.ansible.com/ansible/latest/modules/debug_module.html
+[45]: https://github.com/jdauphant/ansible-role-nginx
+[46]: https://docs.ansible.com/ansible/devel/user_guide/vault.html
+[47]: https://docs.ansible.com/ansible/latest/user_guide/playbooks_vault.html
+[48]: https://raw.githubusercontent.com/express42/otus-snippets/master/hw-12/groupvars
+1) [Ansible Roles and Ansible Galaxy][43]
+```
+ansible-galaxy init app
+ansible-galaxy init db
+```
+db && app roles
+```
+cd terraform/stage && terraform destroy && terraform apply -auto-approve=false
+ansible-playbook site.yml --check
+ansible-playbook site.yml
+```
+2) Make 2 enviroments `ansible-playbook -i environments/prod/inventory deploy.yml`
+test stage env ansible:
+```
+cd terraform/stage && terraform destroy && terraform apply -auto-approve=false
+cd ../../ansible
+ansible-playbook playbooks/site.yml --check
+ansible-playbook playbooks/site.yml
+```
+test prod env ansible:
+```
+cd terraform/stage && terraform destroy
+cd ../prod && terraform apply -auto-approve=false
+cd ../../ansible
+ansible-playbook -i environments/prod/inventory playbooks/site.yml --check
+ansible-playbook -i environments/prod/inventory playbooks/site.yml
+```
+using [module debug][44] we can output msg
+3) Use [ansible-galaxy community role jdauphant.nginx][45]
+install role `ansible-galaxy install -r environments/stage/requirements.yml`
+jdauphant.nginx role needs gathering facts == True in ansible config
+```
+cd terraform/stage && terraform apply
+ansible-playbook -i environments/prod/inventory playbooks/site.yml
+```
+4) [Ansible Voult][46]
+encrypt credentials.yml vs secret voult.key
+```
+ansible-vault encrypt environments/prod/credentials.yml
+ansible-vault encrypt environments/stage/credentials.yml
+```
+test playbook:
+```
+ansible-playbook -i environments/prod/inventory playbooks/site.yml
+```
+
+# TASK **
+[49]: https://medium.com/@Nklya/%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5-%D1%82%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2-travisci-2b5ef9adb16e
+[50]: https://github.com/hashicorp/terraform/blob/master/.travis.yml
+[51]: https://docs.travis-ci.com/user/getting-started/
+[52]: https://docs.travis-ci.com/user/environment-variables/#Global-Variables
+[53]: http://yamllint.readthedocs.io/en/stable/rules.html
+TravisCI.yml - travis CI supports YAML 1.1.
+- [terraform][50]
+- [travis variables][52]
+- [yamllint][53]

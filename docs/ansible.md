@@ -11,7 +11,7 @@ ANSIBLE_DEBUG=1 ansible all -i inventory.yml -m ping
 ```
 
 ############################################################
-# ansible-playbook
+# Ansible-playbook
 # lint `ansible-lint` .
 # `ansible-playbook check` .
 
@@ -22,4 +22,22 @@ ansible-playbook reddit_app.yml --check --limit db
 # `--tags` for filtering on tags applying playbook
 ```
 ansible-playbook reddit_app.yml --check --limit app --tags deploy-tag
+```
+
+# debug
+```
+export ANSIBLE_STRATEGY=debug
+```
+in playbook:
+```
+- hosts: localhost
+  strategy: debug
+    tasks:
+```
+############################################################
+# ansible-vault
+```
+ansible-vault encrypt environments/prod/credentials.yml
+ansible-vault decrypt environments/prod/credentials.yml
+ansible-vault edit environments/prod/credentials.yml
 ```

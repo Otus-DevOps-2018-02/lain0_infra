@@ -2,7 +2,7 @@
 - name: install mongodb on dbserver
   hosts: all
   become: true
-  gather_facts: no
+  gather_facts: false
   tasks:
     - name: Add mongodb APT key
       apt_key:
@@ -22,4 +22,4 @@
     - name: enable mongo
       systemd:
         name: mongod
-        enabled: yes
+        enabled: true
