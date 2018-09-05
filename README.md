@@ -266,7 +266,7 @@ disable provisioning in teraform app/db modules
 `andible-playlook --check reddit_app.yml`
 define variables
 `ansible-playbook reddit_app.yml --check --limit db`
-## [Handlers][33]
+### [Handlers][33]
 handlers run only after another tasks notification like restart daemon on config change
 ```
 ansible-playbook reddit_app.yml --check --limit db
@@ -370,7 +370,82 @@ ansible-playbook -i environments/prod/inventory playbooks/site.yml
 [51]: https://docs.travis-ci.com/user/getting-started/
 [52]: https://docs.travis-ci.com/user/environment-variables/#Global-Variables
 [53]: http://yamllint.readthedocs.io/en/stable/rules.html
+[54]: http://yamllint.readthedocs.io/en/stable/configuration.html
 TravisCI.yml - travis CI supports YAML 1.1.
 - [terraform][50]
 - [travis variables][52]
 - [yamllint][53]
+
+# hw12 Ansible testing roles + molecule + vagrant
+[55]: https://www.vagrantup.com/docs/providers/
+[56]: https://www.virtualbox.org/wiki/Linux_Downloads
+[57]: https://gist.github.com/Nklya/1e3c4ad7fbc95176f0ca5fb89c1bf837
+[58]: https://app.vagrantup.com/boxes/search
+[59]: http://www.vagrantbox.es/
+[60]: https://www.vagrantup.com/docs/provisioning/
+[61]: https://gist.github.com/jhass/a5ae80d87f18e53e7b56
+[62]: https://rubocop.readthedocs.io/en/latest/configuration/
+[63]: https://docs.python-guide.org/dev/virtualenvs/
+[64]: https://molecule.readthedocs.io/en/latest/configuration.html
+[65]: http://testinfra.readthedocs.io/en/latest/modules.html
+[66]: https://gist.github.com/Artemmkin/e1c845e96589d5d71476f57ed931f1ac
+1) Local role developping via [vagrant][55] for provisioning vs
+[virtualbox][56]
+```
+vagrant init && vagrant plugin update && vagrant validate
+vagrant up
+vagrant box list
+vagrant status
+vagrant ssh appserver
+vagrant ssh dbserver
+```
+Vagrant Provisioning
+run vagrant provision on host: dbserver
+test roles:
+```
+vagrant provision dbserver
+vagrant provision appserver
+```
+Parameterize role
+extra_vars has highest priority in env
+test instanses: `vagrant destroy -f && vagrant`
+
+#### Task *
+add ansible.extra_vars in Vagrantfile for nginx role
+
+2) Testing roles via [Molecule][64] and [Testinfra][65]
+install env for python env to use molecule in Ubuntu16.04 vs system python3.5
+```
+sudo apt install python3.6-dev
+pip install virtualenv
+python3 -m virtualenv env
+pip install --user pipenv
+virtualenv --python=python3.6 ~/py3.6
+source ~/py3.6/bin/activate
+```
+
+```
+cd ansible/roles/db
+molecule init scenario --scenario-name default -r db -d vagrant
+```
+create test machine:
+```
+cd ansible/roles/db
+molecule create
+molecule list
+molecule login -h instance
+```
+apply configuration to hosts
+```
+molecule converge
+```
+run test
+```
+molecule verify
+```
+3) Change in packer provisioning: use ansible roles instead ansible playbooks
+```
+gcloud compute images list --filter reddit
+packer validate -var-file=packer/variables.json packer/db.json
+packer validate -var-file=packer/variables.json packer/app.json
+```

@@ -1,0 +1,2 @@
+# Vanrant
+`vagrant validate`
